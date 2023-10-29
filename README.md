@@ -233,6 +233,7 @@ Multi Mode : 进入多重加密模式
 
 ## 开发手册
 #### 1. 固定参数
+<a name="固定参数"></a>
 
 S盒：<img width="168" alt="image" src="https://github.com/Xialanshan/S_AES/assets/110965468/18a16da9-d723-424d-aef1-d7bd22530090">
 
@@ -1420,4 +1421,7 @@ S盒：<img width="168" alt="image" src="https://github.com/Xialanshan/S_AES/ass
 
 2. 加密过程：使用一个16bit明文分组和一个16bit密钥作为输入，生成一个16bit密文分组作为输出。加密算法使用4个不同的函数变换：密钥加，半字节代替，行移位和列混淆。
 3. 解密过程：使用一个16bit密文分组和对应的16bit密钥作为输入，生成原始的16bit明文分组作为输出。解密算法使用4个不同的函数变换：密钥加，逆半字节代替，逆行位移和逆列混淆。
+
+#### 3. S-AES加解密过程中的固定参数
+详见开发手册[固定参数](#固定参数)
 
