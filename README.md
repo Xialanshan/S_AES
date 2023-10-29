@@ -105,5 +105,50 @@ Multi Mode : 进入多重加密模式
 
 #### 第二关 交叉测试
 
+
 #### 第三关 拓展功能
 具体测试在[基础测试](#第一关基础测试test-mode)中已经展示，此处不再赘述
+
+
+#### 第四关 多重加密
+
+| 格式要求    | message     | key     |
+| ------- | ------- | ------- |
+| Double en-decryption   | len = 16   | 32-bit 二进制  |
+| Three en-decryption   | len = 16  | 32 16进制  |
+
+1. 双重加解密
+   
+   测试明文：1001010101110001    测试密文：1111000011001011
+
+   密钥：11110000101010010001101010101001
+
+   生成密文：1111000011001011    生成明文：1001010101110001
+
+   <img width="1120" alt="image" src="https://github.com/Xialanshan/S_AES/assets/110965468/944ed5cf-2809-4756-bde0-8fa35bbe4cab">
+
+   <p align='center'>图 双重加密</p>
+
+   <img width="1120" alt="image" src="https://github.com/Xialanshan/S_AES/assets/110965468/94190f92-ddc3-493f-b37b-a7674958efdd">
+
+   <p align='center'>图 双重解密</p>
+
+   测试明文与生成密文一致，测试密文与生成密文一致，加解密成功。
+
+2. 三重加解密
+
+   测试明文：1001010101110001    测试密文：1001111000011010
+
+   密钥：111100001010100100011010101010010011001010101110
+
+   生成密文：1001111000011010    生成明文：1001010101110001
+
+   <img width="1120" alt="image" src="https://github.com/Xialanshan/S_AES/assets/110965468/5308c6e0-7fab-4893-ade5-45076cacda75">
+   
+   <p align='center'>图 三重加密</p>
+   
+   <img width="1120" alt="image" src="https://github.com/Xialanshan/S_AES/assets/110965468/02450f0b-5a44-4ad8-ae31-7b4b40354d5f">
+   
+   <p align='center'>图 三重解密</p>
+
+   测试明文与生成密文一致，测试密文与生成密文一致，加解密成功。
