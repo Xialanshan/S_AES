@@ -746,3 +746,513 @@ S盒：<img width="168" alt="image" src="https://github.com/Xialanshan/S_AES/ass
     </script>
    </body>
    ```
+2. Test Mode界面：提供基础测试的输入接口与展示窗口
+   ```javascript
+   <body>
+    <h1>Encryption and Decryption</h1>
+    
+    <div class="form-container">
+        <div class="form-row">
+            <label for="type">Select form:</label>
+            <select title="Select the input information form:" name="form" id="form-select">
+                <option value="Binary" selected>Binary</option>
+                <option value="Hex">Hex</option>
+                <option value="ASCII">ASCII</option>
+            </select>
+        </div>
+        <div class="form-row">
+            <label for="message">Message:</label>
+            <input type="text" id="message" placeholder="Enter your message">
+        </div>
+        <div class="form-row">
+            <label for="key">Key:</label>
+            <input type="text" id="key" placeholder="Enter your key">
+        </div>
+    </div>
+
+    <div class="buttons-container">
+        <button id="Encrypt" onclick="encryptMessage()">Encrypt</button>
+        <button id="Decrypt" onclick="decryptMessage()">Decrypt</button>
+    </div>
+
+    <div id="iframeContainer">
+        <iframe title="iframe-title" id="iframe" src="about:blank"></iframe>
+    </div>
+    <br/>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script>
+        function sendRequest(form,message,key,action) {
+            $.ajax({
+                type:"POST",
+                url:"/test_mode/"+action,
+                timeout:5000,
+                contentType: "application/json",
+                data: JSON.stringify({              // 将数据转换为JSON字符串
+                    form: form,
+                    message: message,
+                    key:key
+                }),
+                success:function(responseData){
+                    console.log(responseData);
+                    if (action == 'encryptMessage'){
+                        var my_iframe = document.getElementById('iframe');
+                        my_iframe.contentDocument.body.innerHTML = "";
+                        if (form == 'ASCII'){
+                            var encodedString = responseData;
+                            var parser = new DOMParser();
+                            var decodedDocument = parser.parseFromString('<!doctype html><body>' + encodedString, 'text/html');
+                            var responseData = decodedDocument.body.textContent;
+                        }
+                        my_iframe.contentDocument.body.innerHTML = "CipherText: " + responseData;
+                    }
+                    else if (action == 'decryptMessage'){
+                        var my_iframe = document.getElementById('iframe');
+                        my_iframe.contentDocument.body.innerHTML = "";
+                        if (form == 'ASCII'){
+                            var encodedString = responseData;
+                            var parser = new DOMParser();
+                            var decodedDocument = parser.parseFromString('<!doctype html><body>' + encodedString, 'text/html');
+                            var responseData = decodedDocument.body.textContent;
+                        }
+                        my_iframe.contentDocument.body.innerHTML = "PlainText: " + responseData;
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.log("Error: " + error);
+                }
+            });
+        }
+
+        function encryptMessage() {
+            event.preventDefault();
+            var form = document.getElementById('form-select').value;
+            var message = document.getElementById("message").value;
+            var key = document.getElementById("key").value;
+            if (form === 'Binary' && !isValidBinaryMessage(message)) {
+                alert("The len of message(Binary) must be a multiple of 16! Please retype");
+                return;
+            }
+
+            if (form === 'Hex' && !isValidHexMessage(message)){
+                alert("The len of message(Hex) must be a multiple of 4! Please retype");
+                return;
+            }
+            if (form ==='ASCII' && !isValidAsciiMessage(message)){
+                alert("The len of message(Ascii) must be a multiple of 2! Please retype")
+            }
+            if ((form === 'Binary' || form === 'ASCII') && !isValidKey_binary(key)) {
+                alert("Key must be Binary(16-bit)! Please retype");
+                return;
+            }
+
+            if (form === 'Hex' && !isValidKey_hex(key)){
+                alert("Key must be Hex(4)! Please retype");
+                return;
+            }
+            sendRequest(form, message, key, 'encryptMessage');
+        }
+
+        function decryptMessage() {
+            event.preventDefault();
+            var form = document.getElementById('form-select').value;
+            var message = document.getElementById("message").value;
+            var key = document.getElementById("key").value;
+
+            if (form === 'Binary' && !isValidBinaryMessage(message)) {
+                alert("The len of message(Binary) must be a multiple of 16! Please retype");
+                return;
+            }
+
+            if (form === 'Hex' && !isValidHexMessage(message)){
+                alert("The len of message(Hex) must be a multiple of 4! Please retype");
+                return;
+            }
+            if (form==='ASCII' && !isValidAsciiMessage(message)){
+                alert("The len of message(Ascii) must be a multiple of 2! Please retype")
+            }
+            if ((form === 'Binary' || form === 'ASCII') && !isValidKey_binary(key)) {
+                alert("Key must be Binary(16-bit)! Please retype");
+                return;
+            }
+
+            if (form === 'Hex' && !isValidKey_hex(key)){
+                alert("Key must be Hex(4)! Please retype");
+                return;
+            }
+            sendRequest(form, message, key, 'decryptMessage');
+        }
+
+        // message如果是二进制字符串,长度只能是16-bit的整数倍
+        function isValidBinaryMessage(message) {
+            if (message.length % 16 !== 0 || !/^[01]+$/.test(message)) {
+                return false;
+            }
+            return true;
+        }
+
+        function isValidHexMessage(message){
+            if (message.length %4 !== 0 || !/^[0-9A-Fa-f]+$/.test(message)){
+                return false;
+            }
+            return true;
+        }
+        function isValidAsciiMessage(message){
+            if (message.length % 2 !==0){
+                return false;
+            }
+            return true;
+        }
+        // key只能是Binary(16-bit)字符串
+        function isValidKey_binary(key){
+            if (key.length !== 16 || !/^[01]+$/.test(key)) {
+                return false;
+            }
+            return true;
+        }
+        //key只能是Hex(4)字符串 addition
+        function isValidKey_hex(key){
+            var hexPattern = /^[0-9A-Fa-f]{4}$/;
+            if (hexPattern.test(key)) {
+                return true; 
+            } else {
+                return false; 
+            }
+        }
+
+        $(document).ready(function() {
+            $("#form-select, #message, #key").change(function() {
+                // 重置iframe内容
+                var my_iframe = document.getElementById("iframe");
+                my_iframe.srcdoc = "";
+                });
+
+            $("#Encrypt").click(function() {
+                encryptMessage();
+            });
+
+            $("#Decrypt").click(function() {
+                decryptMessage();
+            });
+        });
+    </script>
+   </body>
+   ```
+3. Work Mode界面：模拟实际使用，支持加密任意长度的二进制明文
+   ```javascript
+   <body>
+    <h1>CBC Work Mode</h1>
+
+    <div class="container">
+        <label for="inputText">InputText:</label>
+        <input type="text" id="inputText" name="inputText" placeholder="Binary string">
+    </div>
+
+    <div class="container">
+        <label for="padding">Padding:</label>
+        <input type="text" id="padding" name="padding" placeholder="For decryption: default 0">
+        </div>
+    </div>
+
+    <div class="container">
+        <label for="inputKey">InputKey:</label>
+        <input type="text" id="inputKey" name="inputKey" placeholder="16-bit Binary mother key">
+    </div>
+
+    <div class="action-buttons">
+        <button id="encryptionButton" onclick="encryptText()">Encryption</button>
+        <button id="decryptionButton" onclick="decryptText()">Decryption</button>
+    </div>
+
+
+    <div id="iframeContainer">
+        <iframe title="iframe-title" id="iframe" src="about:blank"></iframe>
+    </div>
+
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        function sendRequest(inputText, inputKey, padding, action){
+            $.ajax({
+                type:"POST",
+                url:"/work_mode/"+action,
+                timeout:5000,
+                contentType: "application/json",
+                data: JSON.stringify({              
+                    inputText: inputText,
+                    inputKey: inputKey,
+                    padding: padding,
+                }),
+                success:function(responseData){
+                    //console.log(responseData);
+                    if (action=='encryptText'){
+                        var responseData = JSON.parse(responseData);
+                        var result = responseData.result;
+                        var padding = responseData.padding;
+                        var my_iframe = document.getElementById('iframe');
+                        my_iframe.contentDocument.body.innerHTML = "";
+                        my_iframe.contentDocument.body.innerHTML = "Ciphertext:\n" + result + "\n\nPadding:\n " + padding;
+                    }
+                    else if (action=='decryptText'){
+                        console.log(responseData);
+                        var my_iframe = document.getElementById('iframe');
+                        my_iframe.contentDocument.body.innerHTML = "";
+                        my_iframe.contentDocument.body.innerHTML = "Plaintext: " + responseData;
+                    }
+                }, 
+                error: function(xhr, status, error) {
+                    console.log("Error: " + error);
+                }
+            });
+        }
+
+        function encryptText() {
+            event.preventDefault();
+            var inputText = document.getElementById('inputText').value;
+            var inputKey = document.getElementById("inputKey").value;
+            var padding = 0;
+
+            if (!isValidBinaryInputText_en(inputText)) {
+                alert("The inputText must be Binary! Please retype");
+                return;
+            }
+
+            if (!isValidKey(inputKey)) {
+                alert("Key must be binary(16-bit)! Please retype");
+                return;
+            }
+            sendRequest(inputText, inputKey, padding, 'encryptText');
+        }
+
+        
+        function decryptText(){
+            event.preventDefault();
+            var inputText = document.getElementById('inputText').value;
+            var inputKey = document.getElementById("inputKey").value;
+            var padding = document.getElementById("padding").value;
+
+            if (!isValidBinaryInputText_de(inputText)) {
+                alert("The inputText must be binary and a multiple of 16! Please retype");
+                return;
+            }
+
+            if (!validatePaddingInput(padding, inputText)){
+                alert("Padding must be a non-negative integer.");
+                return;
+            }
+
+            if (padding === ""){
+                var padding = parseInt('0',10);
+            }
+            else{
+                var padding = parseInt(padding, 10);
+            }
+
+            if (!isValidKey(inputKey)) {
+                alert("Key must be binary(16-bit)! Please retype");
+                return;
+            }
+            console.log(inputText)
+            console.log(padding)
+            console.log(inputKey)
+            sendRequest(inputText, inputKey, padding, 'decryptText');
+        }
+
+        //加密时对输入内容的要求: 二进制字符串
+        function isValidBinaryInputText_en(inputText){
+            if (!/^[01]+$/.test(inputText)){
+                return false;
+            }
+            return true
+        }
+        //解密时对输入内容的要求：二进制字符串,长度是16的整数
+        function isValidBinaryInputText_de(inputText){
+            if (inputText.length % 16 !== 0 || !/^[01]+$/.test(inputText)){
+                return false;
+            }
+            return true
+        }
+        //对密钥的要求: 16bits二进制字符串
+        function isValidKey(key){
+            if (key.length !== 16 || !/^[01]+$/.test(key)) {
+                return false;
+            }
+            return true;
+        }
+        //对填充值的要求: 0或正整数
+        function validatePaddingInput(padding, inputText) {
+            if (padding === "") {
+                return true; 
+            }
+            else if (/^[0-9]+$/.test(padding) && parseInt(padding, 10) >= 0 && parseInt(padding, 10) < inputText.length) {
+                return true;
+            } 
+            else { 
+                return false;
+            }
+        }
+
+
+        $(document).ready(function() {
+            $("#inputText, #inputKey, #padding").change(function() {
+                // 重置iframe内容
+                var my_iframe = document.getElementById("iframe");
+                my_iframe.srcdoc = "";
+                });
+
+            $("#encryptionButton").click(function() {
+                encryptText();
+            });
+
+            $("#decryptionButton").click(function() {
+                decryptText();
+            });
+
+        });
+
+    </script>
+   </body>
+   ```
+4. Multi Mode: 提供双重加解密和三重加解密的用户接口
+   ```javascript
+   <body>
+    <h1>Multiple Encryption and Decryption</h1>
+    
+    <div class="form-container">
+        <div class="form-row">
+            <label for="type">Select form:</label>
+            <select title="Select the en-decryption method:" name="form" id="form-select">
+                <option value="double" selected>Double en-decryption</option>
+                <option value="three">Three en-decryption</option>
+            </select>
+        </div>
+
+        <div class="form-row">
+            <label for="message">Message:</label>
+            <input type="text" id="message" placeholder="Enter your message">
+        </div>
+
+        <div class="form-row">
+            <label for="key">Key:</label>
+            <input type="text" id="key" placeholder="Enter your key">
+        </div>
+    </div>
+
+    <div class="buttons-container">
+        <button id="Encrypt" onclick="encryptMessage()">Encrypt</button>
+        <button id="Decrypt" onclick="decryptMessage()">Decrypt</button>
+    </div>
+
+    <div id="iframeContainer">
+        <iframe title="iframe-title" id="iframe" src="about:blank"></iframe>
+    </div>
+    <br/>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script>
+        function sendRequest(form,message,key,action) {
+            $.ajax({
+                type:"POST",
+                url:"/multi_mode/"+action,
+                timeout:5000,
+                contentType: "application/json",
+                data: JSON.stringify({              
+                    form: form,
+                    message: message,
+                    key:key
+                }),
+                success:function(responseData){
+                    console.log(responseData);
+                    if (action == 'encryptMessage'){
+                        var my_iframe = document.getElementById('iframe');
+                        my_iframe.contentDocument.body.innerHTML = "";
+                        my_iframe.contentDocument.body.innerHTML = "CipherText: " + responseData;
+                    }
+                    else if (action == 'decryptMessage'){
+                        var my_iframe = document.getElementById('iframe');
+                        my_iframe.contentDocument.body.innerHTML = "";
+                        my_iframe.contentDocument.body.innerHTML = "PlainText: " + responseData;
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.log("Error: " + error);
+                }
+            });
+        }
+
+        function encryptMessage() {
+            event.preventDefault();
+            var form = document.getElementById('form-select').value;
+            var message = document.getElementById("message").value;
+            var key = document.getElementById("key").value;
+            if (!isValidBinaryMessage(message)) {
+                alert("The len of message(Binary) must be 16!\nPlease retype");
+                return;
+            }
+
+            if (!isValidKey(form, key)) {
+                alert("If double de-encryption, then len(key) = 32; \nIf three en-decryption, then len(key) = 48!\nPlease retype");
+                return;
+            }
+            sendRequest(form, message, key, 'encryptMessage');
+        }
+
+        function decryptMessage() {
+            event.preventDefault();
+            var form = document.getElementById('form-select').value;
+            var message = document.getElementById("message").value;
+            var key = document.getElementById("key").value;
+
+            if (!isValidBinaryMessage(message)) {
+                alert("The len of message(Binary) must be 16!\nPlease retype");
+                return;
+            }
+
+            if (!isValidKey(form, key)) {
+                alert("If double de-encryption, then len(key) = 32; \nIf three en-decryption, then len(key) = 48!\nPlease retype");
+                return;
+            }
+            sendRequest(form, message, key, 'decryptMessage');
+        }
+
+        // message只能是16bits的二进制字符串
+        function isValidBinaryMessage(message) {
+            if (message.length  !== 16 || !/^[01]+$/.test(message)) {
+                return false;
+            }
+            return true;
+        }
+        
+        function isValidKey(form, key){
+            if (form === 'double'){
+                if ((key.length !== 32 || !/^[01]+$/.test(key))) {
+                    return false;
+                }
+            }
+            else if (form === 'three'){
+                if ((key.length !== 48 || !/^[01]+$/.test(key))) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        $(document).ready(function() {
+            $("#form-select, #message, #key").change(function() {
+                var my_iframe = document.getElementById("iframe");
+                my_iframe.srcdoc = "";
+                });
+
+            $("#Encrypt").click(function() {
+                encryptMessage;
+            });
+
+            $("#Decrypt").click(function() {
+                decryptMessage;
+            });
+        });
+    </script>
+   </body>
+   ```
