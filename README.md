@@ -602,3 +602,55 @@ S盒：<img width="168" alt="image" src="https://github.com/Xialanshan/S_AES/ass
     plaintext = utils.decrypting_binary(utils.encrypting_binary(utils.decrypting_binary(ciphertext_three, key3), key2), key1)
     return plaintext
    ```
+
+#### 6. 中间相遇攻击
+1. 第一组加密解密，得到一个可能密钥的列表
+   ```python
+   def encrypt_decrypt_all(P, C):
+    my_list = []  # 记录所有加密结果
+    key1_list = []
+    key2_list = []
+    for key in range(2 ** 16):
+        binary_key1 = format(key, '016b')  # 将密钥转换为二进制字符串
+        my_list.append(utils.encrypting_binary(P, binary_key1))
+    for key in range(2 ** 16):
+        binary_key2 = format(key, '016b')
+        decrypted_text = utils.decrypting_binary(C, binary_key2)
+        if decrypted_text in my_list:
+            index = my_list.index(decrypted_text)
+            binary_key1 = format(index, '016b')
+            key1_list.append(binary_key1)
+            key2_list.append(binary_key2)
+    return key1_list, key2_list
+   ```
+2. 其他组明密文对的加解密，找到最终的密钥
+   ```python
+   def try_decrypt(key1_list, key2_list, p_list, c_list):
+    key1 = []
+    key2 = []
+    for i in range(len(c_list)):
+        key1.clear()
+        key2.clear()
+        for j in range(len(key1_list)):
+            decrypt_P = decrypting.decrypting_double(c_list[i], key1_list[j] + key2_list[j])
+            if decrypt_P == p_list[i]:
+                key1.append(key1_list[j])
+                key2.append(key2_list[j])
+        key1_list = copy.copy(key1)
+        key2_list = copy.copy(key2)
+    return key1, key2
+   ```
+3. 中间相遇攻击函数
+   ```python
+   def meet_in(P, C):
+    key1_list, key2_list = encrypt_decrypt_all(P[0], C[0])
+    P_copy = copy.copy(P)
+    C_copy = copy.copy(C)
+    P_copy.pop(0)
+    C_copy.pop(0)
+    result_key=[]
+    key1_list11,key2_list11=try_decrypt(key1_list, key2_list, P_copy, C_copy)
+    for i in range(len(key1_list11)):
+        result_key.append(key1_list11[i]+key2_list11[i])
+    return result_key
+   ```
