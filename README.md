@@ -172,12 +172,28 @@ Multi Mode : 进入多重加密模式
    加密时，系统支持输入任意长度的二进制字符串明文，默认使用末尾补0填充，不支持更改填充方式，返回加密结果和加密时填充的位数(用以解密)；
    解密时，如果不输入填充位数padding，默认未填充，否则请输入明文加密时填充的位数，否则不能返回正确的解密明文。
    密钥要求是16-bit二进制字符串。
+   初始向量通过系统随机生成，系统内置随机数种子seed=12345。
 ```
+测试明文：1000111100100000010101010101      测试密文：00010010110000100101100001010000   (padding = 4)
 
-<img width="1120" alt="image" src="https://github.com/Xialanshan/S_AES/assets/110965468/b13f739d-97a9-4d82-80fc-d73e48db0054">
+密钥：1110010001011110
+
+生成密文：00010010110000100101100001010000   生成明文：1000111100100000010101010101
+
+<img width="1120" alt="image" src="https://github.com/Xialanshan/S_AES/assets/110965468/e6840b68-7803-473d-a5e3-562bafc601b9">
 
 <p align='center'>图 CBC加密</p>
 
-<img width="1120" alt="image" src="https://github.com/Xialanshan/S_AES/assets/110965468/83d3f27c-59d1-447b-a8e1-49c09ef3c6aa">
+<img width="1120" alt="image" src="https://github.com/Xialanshan/S_AES/assets/110965468/d1f669e1-3dc2-40ba-98e0-d07d6fe7f894">
 
 <p align='center'>图 CBC解密</p>
+
+测试明文与生成密文一致，测试密文与生成密文一致，加解密成功。
+
+当密文分组被篡改时，以测试密文为例，调转两个分组的排序，篡改后的密文为：01011000010100000001001011000010，其余保持不变，解密结果为：1001001010010111000000100111
+
+<img width="1120" alt="image" src="https://github.com/Xialanshan/S_AES/assets/110965468/bc8e7b6e-b007-4b79-9b49-85255a55c6a5">
+
+<p align='center'>图 CBC解密篡改测试</p>
+
+两次生成的明文不一致，说明密文被篡改后无法得到正确的明文。
