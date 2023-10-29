@@ -542,3 +542,63 @@ S盒：<img width="168" alt="image" src="https://github.com/Xialanshan/S_AES/ass
         plaintext_ascii = plaintext_ascii + plaintext_ascii1
     return plaintext_ascii
    ```
+
+#### 5. 多重加解密函数
+1. 双重加密函数：输入16bits二进制明文和32bits二进制母密钥，返回16bits二进制密文
+   ```python
+   def encrypting_double(plaintext_double, key):
+    """
+    双重加密
+    :param plaintext_double: 16bits二进制明文
+    :param key: 32bits二进制母密钥
+    :return: 16bits密文
+    """
+    key1 = key[:16]
+    key2 = key[16:]
+    ciphertext_double = utils.encrypting_binary(utils.encrypting_binary(plaintext_double, key1), key2)
+    return ciphertext_double
+   ```
+3. 双重解密函数：输入16bits二进制密文和32bits二进制母密钥，返回16bits二进制明文
+   ```python
+   def decrypting_double(ciphertext_double, key):
+    """
+    双重解密
+    :param ciphertext_double: 16bits二进制明文
+    :param key: 32bits二进制母密钥
+    :return: 16bits明文
+    """
+    key1 = key[:16]
+    key2 = key[16:]
+    plaintext_double = utils.decrypting_binary(utils.decrypting_binary(ciphertext_double, key2), key1)
+    return plaintext_double
+   ```
+4. 三重加密函数：输入16bits二进制明文和48bits二进制母密钥，返回16bits二进制密文
+   ```python
+   def encrypting_three(plaintext_three, key):
+    """
+    三重加密
+    :param plaintext_double: 16bits二进制明文
+    :param key: 48bits二进制母密钥
+    :return: 16bits二进制密文
+    """
+    key1 = key[:16]
+    key2 = key[16:32]
+    key3=key[32:]
+    ciphertext=utils.encrypting_binary(utils.decrypting_binary(utils.encrypting_binary(plaintext_three,key1),key2),key3)
+    return ciphertext
+   ```
+6. 三重解密函数：输入16bits二进制密文和48bits二进制母密钥，返回16bits二进制明文
+   ```python
+   def decrypting_three(ciphertext_three,key):
+    """
+    三重解密
+    :param ciphertext_double: 16bits二进制明文
+    :param key: 48bits二进制母密钥
+    :return: 16bits明文
+    """
+    key1 = key[:16]
+    key2 = key[16:32]
+    key3 = key[32:]
+    plaintext = utils.decrypting_binary(utils.encrypting_binary(utils.decrypting_binary(ciphertext_three, key3), key2), key1)
+    return plaintext
+   ```
