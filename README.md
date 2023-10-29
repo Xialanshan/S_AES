@@ -197,3 +197,39 @@ Multi Mode : 进入多重加密模式
 <p align='center'>图 CBC解密篡改测试</p>
 
 两次生成的明文不一致，说明密文被篡改后无法得到正确的明文。
+
+
+## 开发手册
+#### 1.固定参数
+
+S盒：<img width="168" alt="image" src="https://github.com/Xialanshan/S_AES/assets/110965468/18a16da9-d723-424d-aef1-d7bd22530090">
+
+逆S盒：<img width="181" alt="image" src="https://github.com/Xialanshan/S_AES/assets/110965468/9d52291d-e106-4b29-83ea-c0045cea4716">
+
+列混淆矩阵：<img width="101" alt="image" src="https://github.com/Xialanshan/S_AES/assets/110965468/c9de8aa3-95bf-469f-92b9-bb139a050c64">
+
+逆列混淆矩阵：<img width="128" alt="image" src="https://github.com/Xialanshan/S_AES/assets/110965468/18425bf6-994a-41d5-bd20-1c0b8025270d">
+
+#### 2.密钥拓展
+1. 按位异或函数：输入二进制串a、b，输出a与b按位异或后的结果
+   ```python
+   def xor_bits(a, b):
+    """
+    按位异或
+    :param a: 二进制数
+    :param b: 二进制数
+    :return: a与b异或的结果
+    """
+    result = ""
+    for i in range(len(a)):
+        result += str(int(a[i]) ^ int(b[i]))
+    return result
+   ```
+2. 半字节交换函数：输入8bit二进制，输出前4bit与后4bit交换后的结果
+   ```python
+   def RotNib(w):
+    left_half = w[:4]
+    right_half = w[4:]
+    result = right_half + left_half
+    return result
+   ```
