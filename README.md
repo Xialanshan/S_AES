@@ -173,3 +173,11 @@ Multi Mode : 进入多重加密模式
    解密时，如果不输入填充位数padding，默认未填充，否则请输入明文加密时填充的位数，否则不能返回正确的解密明文。
    密钥要求是16-bit二进制字符串。
 ```
+
+<img width="1120" alt="image" src="https://github.com/Xialanshan/S_AES/assets/110965468/b13f739d-97a9-4d82-80fc-d73e48db0054">
+
+<p align='center'>图 CBC加密</p>
+
+<img width="1120" alt="image" src="https://github.com/Xialanshan/S_AES/assets/110965468/83d3f27c-59d1-447b-a8e1-49c09ef3c6aa">
+
+<p align='center'>图 CBC解密</p>
