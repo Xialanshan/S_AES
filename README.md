@@ -147,7 +147,7 @@ Multi Mode : 进入多重加密模式
 | 格式要求    | message     | key     |
 | ------- | ------- | ------- |
 | Double en-decryption   | len = 16   | 32-bit 二进制  |
-| Three en-decryption   | len = 16  | 32 16进制  |
+| Three en-decryption   | len = 16  | 48-bit 二进制  |
 
 1. 双重加解密
    
