@@ -113,6 +113,31 @@ Multi Mode : 进入多重加密模式
 
    我组进行加密，其他组进行解密，最终结果显示，二进制加解密交叉测试通过。
 
+2. ASCII加解密测试
+
+   ![31ace30555c71bca51acf5541f6e1c8](https://github.com/Xialanshan/S_AES/assets/110965468/04af153e-0369-4b0f-93e0-70407d198a68)
+
+   ![0b1b379aafe04a999c5fa65ff46ee84](https://github.com/Xialanshan/S_AES/assets/110965468/4e783342-b5b8-4701-bc75-b340ada904af)
+
+   用相同的密钥加密相同的明文，两组得到的密文一致，ASCII加解密交叉测试通过
+
+3. 双重加解密测试
+
+   <img width="1120" alt="image" src="https://github.com/Xialanshan/S_AES/assets/110965468/6390ebcc-e89e-453d-a389-d45da66e4032">
+
+   ![8079e8d77c1d874298a925cff410709](https://github.com/Xialanshan/S_AES/assets/110965468/efa3414b-0997-4910-9be7-3d884ca073d0)
+
+   我组进行加密，其他组进行解密，最终结果显示，双重加解密交叉测试通过。
+
+4. 三重加解密测试
+
+   <img width="1120" alt="image" src="https://github.com/Xialanshan/S_AES/assets/110965468/5b0d6b01-0cb4-4a2d-9d2f-546320342edf">
+   
+   ![7716d6790b47a08bfef2ce8b64a892e](https://github.com/Xialanshan/S_AES/assets/110965468/966ba644-4a9f-47d0-b99e-a412ba37ba05)
+
+   我组进行加密，其他组进行解密，最终结果显示，三重加解密交叉测试通过。
+
+   
 #### 第三关 拓展功能
 具体测试在[基础测试](#第一关基础测试test-mode)中已经展示，此处不再赘述
 
