@@ -1,6 +1,7 @@
 # S_AES
 ## 测试报告
-#### 第一关：基本测试
+
+#### 前言
 
 GUI主界面设计：
 
@@ -22,6 +23,41 @@ Work Mode : 进入CBC工作模式
 
 Multi Mode : 进入多重加密模式
 
-![image](https://github.com/Xialanshan/S_AES/assets/110965468/e294ae1b-a14d-422d-bc19-489964f1d8b2)
+![image](https://github.com/Xialanshan/S_AES/assets/110965468/27d4d08f-2e12-469c-ae4b-1a7cda856464)
 
 <p align="center">图4 Multi Mode 界面</p>
+
+
+#### 第一关：基本测试（Test Mode）
+
+| 格式要求    | message     | key     |
+| ------- | ------- | ------- |
+| Binary   | len = 16 * N   | 16-bit 二进制  |
+| Hex   | len = 4 * N   | 4位 16进制  |
+| ASCII   | len = 2 * N   | 16-bit 二进制  |
+
+不满足上述对应要求的时候，会弹出提示窗口，说明正确的格式，并要求重新输入，示例如图（图5，图6）：
+
+![image](https://github.com/Xialanshan/S_AES/assets/110965468/bed1982f-555f-4f86-8bf6-a54c8a519b05)
+
+<p align="center">图5 message 格式不符合要求，弹出提示</p>
+
+![image](https://github.com/Xialanshan/S_AES/assets/110965468/947e5b9a-ebc4-4dcd-a566-1b063263db1d)
+
+<p align="center">图6 key 格式不符合要求，弹出提示</p>
+
+
+1. Binary加解密测试
+
+   测试明文：1010101010101010    测试密文：1011101111100110
+
+   密钥：1000010101010101
+
+   生成密文：1011101111100110    生成明文：1010101010101010
+
+   <img width="1120" alt="image" src="https://github.com/Xialanshan/S_AES/assets/110965468/a31023ac-33c8-4825-bf52-57a6ab2f498c">
+
+   <img width="1120" alt="image" src="https://github.com/Xialanshan/S_AES/assets/110965468/8a8c2704-7b82-4349-9e4f-048330db98c2">
+
+   测试明文与生成密文一致，测试密文与生成密文一致，加解密成功。
+
