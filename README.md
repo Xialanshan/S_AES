@@ -155,13 +155,13 @@ Multi Mode : 进入多重加密模式
 
 3. 中间相遇攻击
 
-   | 明文    | 0000111100001111     | 1111111100000000     | 1100110011001101 | 
-| ------- | ------- | ------- | ---------|
-| 密文   | 1110010001011110   |0010010001010010  | 1010101100100010|
+   | 明文| 0000111100001111| 1111111100000000| 1100110011001101 | 
+   | ----| ------- | ------- | ---------|
+   | 密文| 1110010001011110|0010010001010010| 1010101100100010|
 
-密钥设置：<img width="161" alt="image" src="https://github.com/Xialanshan/S_AES/assets/110965468/ff8e0be2-38c0-41bf-bc0a-c1f0bdaa4667">
+   密钥设置：<img width="161" alt="image" src="https://github.com/Xialanshan/S_AES/assets/110965468/ff8e0be2-38c0-41bf-bc0a-c1f0bdaa4667">
 
-<img width="234" alt="image" src="https://github.com/Xialanshan/S_AES/assets/110965468/c8ea304f-b919-4d48-9337-2c1b14381ab7">
+   <img width="234" alt="image" src="https://github.com/Xialanshan/S_AES/assets/110965468/c8ea304f-b919-4d48-9337-2c1b14381ab7">
 
-返回结果 == key1 + key2
+   返回结果 == key1 + key2
 
