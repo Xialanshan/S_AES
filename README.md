@@ -1425,3 +1425,44 @@ S盒：<img width="168" alt="image" src="https://github.com/Xialanshan/S_AES/ass
 #### 3. S-AES加解密过程中的固定参数
    详见开发手册[固定参数](#固定参数)
 
+#### 4. 功能
+1. 二进制串的加解密
+2. ASCII字符串的加解密
+3. 双重加解密（32bits密钥）
+4. 三重加解密（48bits密钥）
+5. CBC工作模式
+
+#### 5. S-AES系统使用方法
+1. 进入主界面，选择需要的加解密模式(Test Mode、Work Mode、Multi Mode)
+2. 若进入Test Mode:
+   1. 选择输入内容的形式(Binary, Hex, ASCII)
+   2. 输入符合长度要求和形式要求的内容，如若输入有误，会出现弹窗提示用户，用户根据提示修正输入内容
+   3. 输入16bits密钥/4位十六进制密钥，如若输入有误，会出现弹窗提示用户，用户根据提示修正输入密钥
+   4. 选择加密或者解密
+   5. 下方输出框显示加密密文/解密明文
+3. 若进入Work Mode：
+   1. 输入二进制串
+   2. 如果为加密，请忽略padding框；如果为解密，请输入明文加密时的填充位数，否则无法得到正确的明文
+   3. 输入16bits二进制密钥
+   4. 点击按钮
+   5. 下方输出框显示加密密文/解密明文
+4. 若进入Multi Mode
+   1. 选择多重加密形式
+   2. 输入16bits二进制串
+   3. 如果为双重加解密，请输入32bits二进制密钥；如果为三重加解密，请输入48bits二进制密钥
+   4. 选择加密或者解密
+   5. 下方输出框显示加密密文/解密明文   
+
+#### 6. 安全性和注意事项
+1. S-AES相对于标准AES来说安全性较低。因此，它可能不适合高度敏感的数据加密需求。
+2. 确保输入数据采用正确的格式，数据格式问题可能导致加密和解密失败。
+
+#### 7. 合规性和法规
+在使用S-AES加密时，确保您的组织了解并遵守适用的法规和标准，以确保数据的安全性和合法性。如果需要，寻求法律和合规性专家的建议。
+
+#### 8. 参考资料
+\[1\]\Stallings, William. "Cryptography and Network Security: Principles and Practice." Pearson, 2016.
+\[2\]\Paar, Christof, and Jan Pelzl. "Understanding Cryptography: A Textbook for Students and Practitioners." Springer, 2010.
+
+#### 9. 历史版本
+版本1.0（2023年10月28日），初始版本。
