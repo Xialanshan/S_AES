@@ -160,11 +160,11 @@ Multi Mode : 进入多重加密模式
 
    <img width="1120" alt="image" src="https://github.com/Xialanshan/S_AES/assets/110965468/944ed5cf-2809-4756-bde0-8fa35bbe4cab">
 
-   <p align='center'>图 双重加密</p>
+   <p align='center'>图13 双重加密</p>
 
    <img width="1120" alt="image" src="https://github.com/Xialanshan/S_AES/assets/110965468/94190f92-ddc3-493f-b37b-a7674958efdd">
 
-   <p align='center'>图 双重解密</p>
+   <p align='center'>图14 双重解密</p>
 
    测试明文与生成密文一致，测试密文与生成密文一致，加解密成功。
 
@@ -178,11 +178,11 @@ Multi Mode : 进入多重加密模式
 
    <img width="1120" alt="image" src="https://github.com/Xialanshan/S_AES/assets/110965468/5308c6e0-7fab-4893-ade5-45076cacda75">
    
-   <p align='center'>图 三重加密</p>
+   <p align='center'>图15 三重加密</p>
    
    <img width="1120" alt="image" src="https://github.com/Xialanshan/S_AES/assets/110965468/02450f0b-5a44-4ad8-ae31-7b4b40354d5f">
    
-   <p align='center'>图 三重解密</p>
+   <p align='center'>图16 三重解密</p>
 
    测试明文与生成密文一致，测试密文与生成密文一致，加解密成功。
 
@@ -215,11 +215,11 @@ Multi Mode : 进入多重加密模式
 
 <img width="1120" alt="image" src="https://github.com/Xialanshan/S_AES/assets/110965468/e6840b68-7803-473d-a5e3-562bafc601b9">
 
-<p align='center'>图 CBC加密</p>
+<p align='center'>图17 CBC加密</p>
 
 <img width="1120" alt="image" src="https://github.com/Xialanshan/S_AES/assets/110965468/d1f669e1-3dc2-40ba-98e0-d07d6fe7f894">
 
-<p align='center'>图 CBC解密</p>
+<p align='center'>图18 CBC解密</p>
 
 测试明文与生成密文一致，测试密文与生成密文一致，加解密成功。
 
@@ -227,7 +227,7 @@ Multi Mode : 进入多重加密模式
 
 <img width="1120" alt="image" src="https://github.com/Xialanshan/S_AES/assets/110965468/bc8e7b6e-b007-4b79-9b49-85255a55c6a5">
 
-<p align='center'>图 CBC解密篡改测试</p>
+<p align='center'>图19 CBC解密篡改测试</p>
 
 两次生成的明文不一致，说明密文被篡改后无法得到正确的明文。
 
