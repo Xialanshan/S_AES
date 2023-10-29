@@ -1404,3 +1404,20 @@ S盒：<img width="168" alt="image" src="https://github.com/Xialanshan/S_AES/ass
        else:
            return "Invalid request method."
    ```
+
+
+## S-AES用户指南
+#### 1. S-AES基础知识
+简化AES（S-AES）是AES的简化版本，是一种对称加密算法，由Santa Clara大学的Edward Schaefer教授和他的学生提出。S-AES和AES在结构上非常相似，但由于其参数规模更小，更加便于直观的显示和研究。此系统实现了S-AES的加解密与扩展应用。
+
+#### 2. S-AES加解密介绍
+加解密算法中的明文，密文，密钥都是16bits分组，(用户输入形式参照网页提示或者测试报告)
+1. 密钥拓展：16bit初始密钥被分成两个8位字w0和w1，经过如下的方式扩展为3个16bits轮密钥
+   
+   <img width="305" alt="image" src="https://github.com/Xialanshan/S_AES/assets/110965468/62883a08-6d03-4902-822c-83d617be0d6b">
+
+   其中，RCON是一个轮常数：<img width="392" alt="image" src="https://github.com/Xialanshan/S_AES/assets/110965468/080f3aa9-a41f-4f5e-831b-69dec43b0e01">
+
+2. 加密过程：使用一个16bit明文分组和一个16bit密钥作为输入，生成一个16bit密文分组作为输出。加密算法使用4个不同的函数变换：密钥加，半字节代替，行移位和列混淆。
+3. 解密过程：使用一个16bit密文分组和对应的16bit密钥作为输入，生成原始的16bit明文分组作为输出。解密算法使用4个不同的函数变换：密钥加，逆半字节代替，逆行位移和逆列混淆。
+
