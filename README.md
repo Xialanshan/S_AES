@@ -718,3 +718,31 @@ S盒：<img width="168" alt="image" src="https://github.com/Xialanshan/S_AES/ass
     else:
         return result[:-padding]
    ```
+
+#### 8. GUI界面和用户交互设置
+1. 主界面：创建三个接口，分别加载出不同模式的具体界面
+   ```javascript
+   <body>
+    <button id="testModeButton">Test Mode</button>
+    <button id="workModeButton">Work Mode</button>
+    <button id="multiModeButton">Multi Mode</button>
+
+    <script>
+        const testModeButton = document.getElementById("testModeButton");
+        const workModeButton = document.getElementById("workModeButton");
+        const multiModeButton = document.getElementById("multiModeButton");
+        testModeButton.addEventListener("click", function() {
+            window.location.href = "/test_mode";
+        });
+
+        workModeButton.addEventListener("click", function() {
+            window.location.href = "/work_mode";
+        });
+
+        multiModeButton.addEventListener("click", function(){
+            window.location.href = "/multi_mode";
+        });
+
+    </script>
+   </body>
+   ```
