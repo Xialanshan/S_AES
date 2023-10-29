@@ -105,6 +105,13 @@ Multi Mode : 进入多重加密模式
 
 #### 第二关 交叉测试
 
+1. 二进制加解密测试
+   
+   ![bc685eb8e788f730535b364febf5645](https://github.com/Xialanshan/S_AES/assets/110965468/9cac0832-7ed3-48e4-93f4-32659b7043af)
+
+   ![bb0e58b52a268611a0c7f054b02e807](https://github.com/Xialanshan/S_AES/assets/110965468/325b3fb0-1263-4153-bd1f-4b36e253b9b0)
+
+   我组进行加密，其他组进行解密，最终结果显示，二进制加解密交叉测试通过。
 
 #### 第三关 拓展功能
 具体测试在[基础测试](#第一关基础测试test-mode)中已经展示，此处不再赘述
