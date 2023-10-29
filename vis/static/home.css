@@ -1,0 +1,40 @@
+body {
+    background-image: url('./background.jpg'); 
+    background-size: cover; 
+    background-repeat: no-repeat; 
+    background-attachment: fixed; 
+}
+
+
+button {
+    width: 200px;
+    height: 60px;
+    font-size: 20px;
+    display: block; /* 让按钮显示为块元素，一个按钮一行 */
+    margin-bottom: 50px; /* 下方间隔 50px */
+}
+
+
+
+#testModeButton{
+    position: absolute;
+    top: 40%;
+    transform: translateY(-50%);
+    left: calc(80% - 100px);
+}
+
+#workModeButton{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: calc(80% - 100px);
+}
+
+#multiModeButton{
+    position: absolute;
+    top: 60%;
+    transform: translateY(-50%);
+    left: calc(80% - 100px);
+}
+
+

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <title>Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="../static/home.css">
+</head>
+<body>
+    <button id="testModeButton">Test Mode</button>
+    <button id="workModeButton">Work Mode</button>
+    <button id="multiModeButton">Multi Mode</button>
+
+    <script>
+        const testModeButton = document.getElementById("testModeButton");
+        const workModeButton = document.getElementById("workModeButton");
+        const multiModeButton = document.getElementById("multiModeButton");
+        testModeButton.addEventListener("click", function() {
+            window.location.href = "/test_mode";
+        });
+
+        workModeButton.addEventListener("click", function() {
+            window.location.href = "/work_mode";
+        });
+
+        multiModeButton.addEventListener("click", function(){
+            window.location.href = "/multi_mode";
+        });
+
+    </script>
+</body>
+</html>
