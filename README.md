@@ -200,7 +200,7 @@ Multi Mode : 进入多重加密模式
 
 
 ## 开发手册
-#### 1.固定参数
+#### 1. 固定参数
 
 S盒：<img width="168" alt="image" src="https://github.com/Xialanshan/S_AES/assets/110965468/18a16da9-d723-424d-aef1-d7bd22530090">
 
@@ -210,7 +210,7 @@ S盒：<img width="168" alt="image" src="https://github.com/Xialanshan/S_AES/ass
 
 逆列混淆矩阵：<img width="128" alt="image" src="https://github.com/Xialanshan/S_AES/assets/110965468/18425bf6-994a-41d5-bd20-1c0b8025270d">
 
-#### 2.密钥拓展
+#### 2. 密钥拓展
 1. 按位异或函数：输入二进制串a、b，输出a与b按位异或后的结果
    ```python
    def xor_bits(a, b):
@@ -289,7 +289,7 @@ S盒：<img width="168" alt="image" src="https://github.com/Xialanshan/S_AES/ass
     return key_w
    ```
 
-#### 3.加解密辅助函数
+#### 3. 加解密辅助函数
 1. 密钥加函数：同按位异或函数
 2. 半字节代替函数：输入16bits明文二进制串，返回半字节替换后的16bits二进制串
    ```python
@@ -415,4 +415,130 @@ S盒：<img width="168" alt="image" src="https://github.com/Xialanshan/S_AES/ass
     INS = halfbyte_substitution(ISR, S_inv)
     Ak0 = GetKeys.xor_bits(INS, keys[0])
     return Ak0
+   ```
+3. 二进制加密函数
+   ```python
+   def encrypting_binaryStr(plaintext_str, key):
+    """
+    长度为16bits(倍数)的二进制明文加密操作
+    :param plaintext_str: 16bits(倍数)二进制明文串
+    :param key: 16bits母密钥
+    :return: 16bits(倍数)二进制密文串
+    """
+    length = len(plaintext_str)
+    if length % 16 != 0:
+        return
+    ciphertext_binarystring = ""
+    for i in range(0, length, 16):
+        group = plaintext_str[i:i + 16]
+        plain_group = utils.encrypting_binary(group, key)
+        ciphertext_binarystring += plain_group
+    return ciphertext_binarystring
+   ```
+4. 二进制解密函数
+   ```python
+   def decrypting_binaryStr(ciphertext_str, key):
+    """
+    长度为16bits(倍数)的二进制密文解密操作
+    :param ciphertext_str: 16bits(倍数)二进制密文串
+    :param key: 16bits母密钥
+    :return: 16bits(倍数)二进制明文串
+    """
+    length = len(ciphertext_str)
+    if length % 16 != 0:
+        return
+    plaintext_binarystring = ""
+    for i in range(0, length, 16):
+        group = ciphertext_str[i:i + 16]
+        plain_group = utils.decrypting_binary(group, key)
+        plaintext_binarystring = plaintext_binarystring + plain_group
+    return plaintext_binarystring
+   ```
+5. 十六进制加密函数
+   ```python
+   def encrypting_hexadecimal(plaintext_hexadecimal, key_hexadecimal):
+    """
+    :param plaintext_hexadecimal: 十六进制明文
+    :param key_hexadecimal: 十六进制密钥
+    :return: 十六进制的密文
+    """
+    length = len(plaintext_hexadecimal)
+    if length % 4 != 0:
+        return
+    ciphertext_hexadeciaml = ""
+    key = (bin(int(key_hexadecimal, 16))[2:]).zfill(16)
+    for i in range(0, length, 4):
+        group = plaintext_hexadecimal[i:i + 4]
+        ciphertext_binary = (bin(int(group, 16))[2:]).zfill(16)
+        ciphertext_binary = utils.encrypting_binary(ciphertext_binary, key)
+        ciphertext_hexadeciaml1 = hex(int(ciphertext_binary, 2))[2:].zfill(4)
+        ciphertext_hexadeciaml += ciphertext_hexadeciaml1
+    return ciphertext_hexadeciaml
+   ```
+6. 十六进制解密函数
+   ```python
+   def decrypting_hexadecimal(ciphertext_hexadecimal, key_hexadecimal):
+    """
+    密文为十六进制的解密函数
+    :param ciphertext_hexadecimal: 十六进制密文
+    :param key_hexadecimal: 十六进制密钥
+    :return: 十六进制的解密明文
+    """
+    length = len(ciphertext_hexadecimal)
+    if length % 4 != 0:
+        return
+    plaintext_hexadeciaml = ""
+    key = (bin(int(key_hexadecimal, 16))[2:]).zfill(16)
+    for i in range(0, length, 4):
+        group = ciphertext_hexadecimal[i:i + 4]
+        ciphertext_binary = (bin(int(group, 16))[2:]).zfill(16)
+        plaintext_binary = utils.decrypting_binary(ciphertext_binary, key)
+        plaintext_hexadeciaml1 = hex(int(plaintext_binary, 2))[2:].zfill(4)
+        plaintext_hexadeciaml = plaintext_hexadeciaml + plaintext_hexadeciaml1
+    return plaintext_hexadeciaml
+   ```
+7. ASCII加密函数
+   ```python
+   def encrypting_ascii(plaintext_ascii, key):
+    """
+    :param plaintext_ascii: ASCII明文
+    :param key: 16bits二进制母密钥
+    :return: ASCII密文
+    """
+    length = len(plaintext_ascii)
+    if length % 2 != 0:     
+        return
+    ciphertext_ascii = ""
+    for i in range(0, length, 2):
+        group = plaintext_ascii[i:i + 2]
+        plaintext_binary = ''.join([bin(ord(char))[2:].zfill(8) for char in group])
+        ciphertext_binary1 = utils.encrypting_binary(plaintext_binary, key)
+        byte1 = ciphertext_binary1[0:8]
+        byte2 = ciphertext_binary1[8:16]
+        ciphertext_ascii1 = chr(int(byte1, 2)) + chr(int(byte2, 2))
+        ciphertext_ascii += ciphertext_ascii1
+    return ciphertext_ascii
+   ```
+8. ASCII 解密函数
+   ```python
+   def decrypting_ascii(ciphertext_ascii, key):
+    """
+    ASCII码密文解密
+    :param ciphertext_ascii: ASCII码形式的密文
+    :param key: 16bits二进制密文
+    :return: ASCII码形式的明文
+    """
+    length = len(ciphertext_ascii)
+    if length % 2 != 0:
+        return
+    plaintext_ascii = ""
+    for i in range(0, length, 2):
+        group = ciphertext_ascii[i:i + 2]
+        ciphertext_binary = ''.join([bin(ord(char))[2:].zfill(8) for char in group])
+        plaintext_binary1 = utils.decrypting_binary(ciphertext_binary, key)
+        byte1 = plaintext_binary1[0:8]
+        byte2 = plaintext_binary1[8:16]
+        plaintext_ascii1 = chr(int(byte1, 2)) + chr(int(byte2, 2))
+        plaintext_ascii = plaintext_ascii + plaintext_ascii1
+    return plaintext_ascii
    ```
