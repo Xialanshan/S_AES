@@ -1420,8 +1420,12 @@ S盒：<img width="168" alt="image" src="https://github.com/Xialanshan/S_AES/ass
 
    其中，RCON是一个轮常数：<img width="392" alt="image" src="https://github.com/Xialanshan/S_AES/assets/110965468/080f3aa9-a41f-4f5e-831b-69dec43b0e01">
 
+   <img width="268" alt="feb9137751efca3d7dc0d30066bd112" src="https://github.com/Xialanshan/S_AES/assets/110965468/9f1c3627-9a3c-4352-911f-1db727600b95">
+
 2. 加密过程：使用一个16bit明文分组和一个16bit密钥作为输入，生成一个16bit密文分组作为输出。加密算法使用4个不同的函数变换：密钥加，半字节代替，行移位和列混淆。
 3. 解密过程：使用一个16bit密文分组和对应的16bit密钥作为输入，生成原始的16bit明文分组作为输出。解密算法使用4个不同的函数变换：密钥加，逆半字节代替，逆行位移和逆列混淆。
+
+   <img width="412" alt="1bfd0b0a0b113ef7131772b154fcf6a" src="https://github.com/Xialanshan/S_AES/assets/110965468/912c8b62-cc8f-4781-9573-dc4954f1580d">
 
 #### 3. S-AES加解密过程中的固定参数
    详见开发手册[固定参数](#固定参数)
